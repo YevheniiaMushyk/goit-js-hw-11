@@ -15,15 +15,17 @@
   </head>
   <body>
     <div class="conteiner">
-      <div class="data-select">
+      <form class="data-select">
         <input
           class="user-input"
           type="text"
-          id="datetime-picker"
+          name="request"
           placeholder="Search images..."
+          required
         />
-        <button class="form-button" type="submit" data-start>Search</button>
-      </div>
+        <button class="form-button" type="submit">Search</button>
+      </form>
+      <ul class="gallery-list"></ul>
     </div>
 
     <script type="module" src="./main.js"></script>
