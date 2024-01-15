@@ -13,19 +13,23 @@
     />
     
     <script type="module" crossorigin src="/goit-js-hw-11/commonHelpers.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-11/assets/vendor-491d46cf.js">
+    <link rel="stylesheet" href="/goit-js-hw-11/assets/vendor-eb6030bc.css">
     <link rel="stylesheet" href="/goit-js-hw-11/assets/index-bbc63f5d.css">
   </head>
   <body>
     <div class="conteiner">
-      <div class="data-select">
+      <form class="data-select">
         <input
           class="user-input"
           type="text"
-          id="datetime-picker"
+          name="request"
           placeholder="Search images..."
+          required
         />
-        <button class="form-button" type="submit" data-start>Search</button>
-      </div>
+        <button class="form-button" type="submit">Search</button>
+      </form>
+      <ul class="gallery-list"></ul>
     </div>
 
     
