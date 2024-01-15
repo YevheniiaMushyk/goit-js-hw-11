@@ -43,15 +43,9 @@ function fetchUsers(userRequest) {
 }
 
 function renderGallery(data) {
-  if (userList.children.length > 0) {
-    userList.children.forEach(item => {
-      item.remove();
-    });
-  }
-  if (data.totalHits > 0) {
-    const markup = data.hits
-      .map(hit => {
-        return `<li class="gallery-item">
+  const markup = data.hits
+    .map(hit => {
+      return `<li class="gallery-item">
           <a class="gallery-link" href="${hit.largeImageURL}">
     	      <img
 		          class="gallery-image"
@@ -78,13 +72,14 @@ function renderGallery(data) {
             </ul>
   		    </a>
         </li>`;
-      })
-      .join('');
-    userList.insertAdjacentHTML('beforeend', markup);
-  }
+    })
+    .join('');
+  userList.innerHTML = '';
+  userList.insertAdjacentHTML('beforeend', markup);
 
   const lightbox = new SimpleLightbox('.gallery-list a', {
     captionsData: 'alt',
     captionDelay: 250,
   });
+  lightbox.refresh();
 }
