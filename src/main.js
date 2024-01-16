@@ -4,6 +4,8 @@ import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+import icon from './img/x-octagon.svg';
+
 const userInput = document.querySelector('.data-select');
 const userList = document.querySelector('.gallery-list');
 const activeLoader = document.querySelector('.loader');
@@ -20,17 +22,15 @@ userInput.addEventListener('submit', e => {
       renderGallery(data);
     })
     .catch(() => {
-      console.log('catch in progress');
       activeLoader.classList.toggle('loader-active');
       iziToast.error({
-        message:
-          'Sorry, there are no images matching </br> your search query. Please try again!',
+        message: 'Something wrong. Please try again later!',
         messageColor: '#FAFAFB',
         messageSize: '16',
         messageLineHeight: '20',
         position: 'bottomCenter',
         backgroundColor: '#EF4040',
-        // iconUrl: './src/img/x-octagon.svg',
+        iconUrl: icon,
         icon: 'fa-regular',
         iconColor: '#FAFAFB',
         maxWidth: '500',
@@ -58,6 +58,22 @@ function fetchGallery(userRequest) {
 }
 
 function renderGallery(data) {
+  console.log(data.totalHits);
+  if (data.totalHits <= 0) {
+    iziToast.error({
+      message:
+        'Sorry, there are no images matching </br> your search query. Please try again!',
+      messageColor: '#FAFAFB',
+      messageSize: '16',
+      messageLineHeight: '20',
+      position: 'bottomCenter',
+      backgroundColor: '#EF4040',
+      iconUrl: icon,
+      iconColor: '#FAFAFB',
+      maxWidth: '500',
+      transitionIn: 'bounceInLeft',
+    });
+  }
   const markup = data.hits
     .map(hit => {
       return `<li class="gallery-item">
