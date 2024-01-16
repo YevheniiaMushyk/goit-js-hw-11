@@ -28,7 +28,7 @@ userInput.addEventListener('submit', e => {
         messageColor: '#FAFAFB',
         messageSize: '16',
         messageLineHeight: '20',
-        position: 'bottomCenter',
+        position: 'topRight',
         backgroundColor: '#EF4040',
         iconUrl: icon,
         icon: 'fa-regular',
@@ -58,7 +58,6 @@ function fetchGallery(userRequest) {
 }
 
 function renderGallery(data) {
-  console.log(data.totalHits);
   if (data.totalHits <= 0) {
     iziToast.error({
       message:
@@ -66,12 +65,13 @@ function renderGallery(data) {
       messageColor: '#FAFAFB',
       messageSize: '16',
       messageLineHeight: '20',
-      position: 'bottomCenter',
+      position: 'topRight',
       backgroundColor: '#EF4040',
       iconUrl: icon,
       iconColor: '#FAFAFB',
       maxWidth: '500',
-      transitionIn: 'bounceInLeft',
+      closeOnClick: true,
+      close: false,
     });
   }
   const markup = data.hits
