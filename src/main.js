@@ -13,13 +13,14 @@ userInput.addEventListener('submit', e => {
   const userInputValue = userInput.elements.request.value.trim();
   userList.innerHTML = '';
   activeLoader.classList.toggle('loader-active');
-  fetchUsers(userInputValue)
+
+  fetchGallery(userInputValue)
     .then(data => {
       activeLoader.classList.toggle('loader-active');
       renderGallery(data);
     })
-    .catch(error => {
-      console.log('hello');
+    .catch(() => {
+      console.log('catch in progress');
       activeLoader.classList.toggle('loader-active');
       iziToast.error({
         message:
@@ -29,13 +30,14 @@ userInput.addEventListener('submit', e => {
         messageLineHeight: '20',
         position: 'bottomCenter',
         backgroundColor: '#EF4040',
-        icon: 'bi:x-octagon',
+        // iconUrl: './src/img/x-octagon.svg',
+        icon: 'fa-regular',
         iconColor: '#FAFAFB',
+        maxWidth: '500',
+        transitionIn: 'bounceInLeft',
       });
     })
-    .finally(() => {
-      userInput.reset();
-    });
+    .finally(() => userInput.reset());
 });
 
 const searchParams = new URLSearchParams({
@@ -44,7 +46,7 @@ const searchParams = new URLSearchParams({
   safesearch: true,
 });
 
-function fetchUsers(userRequest) {
+function fetchGallery(userRequest) {
   return fetch(
     `https://pixabay.com/api/?key=41825347-2a0e6255edbe790f7737a6334&q=${userRequest}&${searchParams}`
   ).then(response => {
