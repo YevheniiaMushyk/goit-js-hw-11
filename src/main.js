@@ -6,22 +6,36 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const userInput = document.querySelector('.data-select');
 const userList = document.querySelector('.gallery-list');
+const activeLoader = document.querySelector('.loader');
 
 userInput.addEventListener('submit', e => {
   e.preventDefault();
   const userInputValue = userInput.elements.request.value.trim();
-
+  userList.innerHTML = '';
+  activeLoader.classList.toggle('loader-active');
   fetchUsers(userInputValue)
-    .then(data => renderGallery(data))
+    .then(data => {
+      activeLoader.classList.toggle('loader-active');
+      renderGallery(data);
+    })
     .catch(error => {
+      console.log('hello');
+      activeLoader.classList.toggle('loader-active');
       iziToast.error({
-        title: 'Error',
         message:
-          'Sorry, there are no images matching your search query. Please try again!',
-        position: 'topRight',
+          'Sorry, there are no images matching </br> your search query. Please try again!',
+        messageColor: '#FAFAFB',
+        messageSize: '16',
+        messageLineHeight: '20',
+        position: 'bottomCenter',
+        backgroundColor: '#EF4040',
+        icon: 'bi:x-octagon',
+        iconColor: '#FAFAFB',
       });
     })
-    .finally(() => userInput.reset());
+    .finally(() => {
+      userInput.reset();
+    });
 });
 
 const searchParams = new URLSearchParams({
@@ -50,6 +64,9 @@ function renderGallery(data) {
 		          class="gallery-image"
 		          src="${hit.webformatURL}"
 		          alt="${hit.tags}"
+              width="360"
+              height="200"
+              ;
     	      />
             <ul class="info-list">
               <li class="info-item">
@@ -73,7 +90,6 @@ function renderGallery(data) {
         </li>`;
     })
     .join('');
-  userList.innerHTML = '';
   userList.insertAdjacentHTML('beforeend', markup);
 
   const lightbox = new SimpleLightbox('.gallery-list a', {
