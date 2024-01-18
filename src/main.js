@@ -18,11 +18,9 @@ userInput.addEventListener('submit', e => {
 
   fetchGallery(userInputValue)
     .then(data => {
-      activeLoader.classList.toggle('loader-active');
       renderGallery(data);
     })
     .catch(() => {
-      activeLoader.classList.toggle('loader-active');
       iziToast.error({
         message: 'Something wrong. Please try again later!',
         messageColor: '#FAFAFB',
@@ -37,7 +35,10 @@ userInput.addEventListener('submit', e => {
         transitionIn: 'bounceInLeft',
       });
     })
-    .finally(() => userInput.reset());
+    .finally(() => {
+      activeLoader.classList.toggle('loader-active');
+      userInput.reset();
+    });
 });
 
 const searchParams = new URLSearchParams({
